@@ -4,11 +4,6 @@
 #   .tm-articles-list>article .tm-votes-meter__value
 #   tm-articles-list__item
 
-import datetime
-import os
-from dataclasses import dataclass
-from pathlib import Path
-from time import sleep
 from requests import get
 import re
 import bs4
@@ -27,7 +22,6 @@ def parseBibl(txt):
         span = item.find("span", class_="tm-votes-meter__value")
         result.append(f"Статья: '{h2.get_text()}' Рейтинг ({span.get_text()})")
     return result
-       # print(f"Статья: '{h2.get_text()}' Рейтинг ({span.get_text()})")
 
 
 
@@ -43,9 +37,6 @@ def parseRegex(txt):
         result.append(f"Статья: '{h}' (Рейтинг {rating[c]})")
         c += 1
     return result
-
-
-#def main():
 
 
 
@@ -72,8 +63,6 @@ def parsbs4():
     try:
         resp = main2()
         res = parseBibl(resp.text)
-        # for a in res:
-        #     print(a)
     except Exception as e:
         print(e)
     return render_template('bs4.html', data=res)
@@ -84,8 +73,6 @@ def parsregex():
     try:
         resp = main2()
         res = parseRegex(resp.text)
-        # for a in res:
-        #     print(a)
     except Exception as e:
         print(e)
     return render_template('regex.html', data=res)
@@ -100,5 +87,3 @@ if __name__ == "__main__":
         print(e)
 
     app.run(debug=False)
-    #main()
-   # input("Для завершения нажмите Ентер")
